@@ -8,6 +8,9 @@ DOMAIN = "zeromouse"
 COGNITO_REGION = "eu-central-1"
 COGNITO_CLIENT_ID = "7pdec0rbivg5hg8u3pke4veg0f"
 COGNITO_ENDPOINT = f"https://cognito-idp.{COGNITO_REGION}.amazonaws.com/"
+COGNITO_IDENTITY_ENDPOINT = f"https://cognito-identity.{COGNITO_REGION}.amazonaws.com/"
+COGNITO_USER_POOL_ID = "eu-central-1_LS6CKN0t1"
+COGNITO_IDENTITY_POOL_ID = "eu-central-1:2b2f7d40-d6f9-474e-a06b-6441c4059601"
 
 # API endpoints (fixed)
 SHADOW_API_URL = (
