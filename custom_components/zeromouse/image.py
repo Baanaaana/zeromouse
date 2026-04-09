@@ -23,7 +23,8 @@ class ZeromouseEventImage(ZeromouseEntity, ImageEntity):
     _attr_translation_key = "event_image"
 
     def __init__(self, coordinator, device_id, device_name, session) -> None:
-        super().__init__(coordinator, device_id, device_name)
+        ZeromouseEntity.__init__(self, coordinator, device_id, device_name)
+        ImageEntity.__init__(self, coordinator.hass)
         self._attr_unique_id = f"{device_id}_event_image"
         self._session = session
         self._cached_event_id: str | None = None
