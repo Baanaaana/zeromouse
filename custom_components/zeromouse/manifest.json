@@ -3,8 +3,8 @@
   "name": "ZeroMOUSE",
   "codeowners": ["@Baanaaana"],
   "config_flow": true,
-  "documentation": "https://github.com/Baanaaana/zeromouse",
+  "documentation": "https://github.com/Baanaaana/ZeroMOUSE-HomeAssistant",
   "iot_class": "cloud_polling",
-  "issue_tracker": "https://github.com/Baanaaana/zeromouse/issues",
+  "issue_tracker": "https://github.com/Baanaaana/ZeroMOUSE-HomeAssistant/issues",
   "version": "1.0.0"
 }

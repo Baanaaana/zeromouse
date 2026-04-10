@@ -1,8 +1,7 @@
 # ZeroMOUSE Home Assistant Integration
 
 <p align="center">
-  <a href="#"><img src="zeromouse_logo_dark.png#gh-light-mode-only" alt="ZeroMOUSE logo" width="200"></a>
-  <a href="#"><img src="zeromouse_logo_light.png#gh-dark-mode-only" alt="ZeroMOUSE logo" width="200"></a>
+  <img src="zeromouse_logo.svg" alt="ZeroMOUSE logo" width="200">
 </p>
 
 > **Disclaimer:** This is an **unofficial**, community-developed integration. It is **not** created, endorsed, or supported by ZeroMOUSE or its parent company. The ZeroMOUSE name and logo are trademarks of their respective owners and are used here solely for identification purposes. This project has no affiliation with ZeroMOUSE.
@@ -43,7 +42,7 @@ A custom [Home Assistant](https://www.home-assistant.io/) integration for the **
 
 ### HACS (recommended)
 
-[![Open your Home Assistant instance and open a repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=Baanaaana&repository=zeromouse&category=integration)
+[![Open your Home Assistant instance and open a repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=Baanaaana&repository=ZeroMOUSE-HomeAssistant&category=integration)
 
 Or manually:
 
