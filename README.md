@@ -64,6 +64,66 @@ Or manually:
 3. Enter your ZeroMOUSE account **email** and **password** (same as the mobile app)
 4. Your device is discovered automatically — done!
 
+## Dashboard Card
+
+Add this YAML to your dashboard for a ZeroMOUSE overview card:
+
+```yaml
+type: vertical-stack
+cards:
+  - type: picture-entity
+    entity: image.zeromouse_last_event
+    show_state: false
+    show_name: false
+  - type: entities
+    entities:
+      - entity: sensor.zeromouse_last_event_classification
+        name: Classification
+      - entity: sensor.zeromouse_last_event_type
+        name: Event Type
+      - entity: sensor.zeromouse_last_event_time
+        name: Event Time
+      - entity: binary_sensor.zeromouse_flap_blocked
+        name: Flap Blocked
+      - entity: binary_sensor.zeromouse_prey_blocking_enabled
+        name: Prey Blocking
+```
+
+## Mobile Notification with Image
+
+Send a notification to your phone with the detection image when a new event occurs. Add this automation:
+
+```yaml
+automation:
+  - alias: ZeroMOUSE detection alert
+    trigger:
+      - platform: state
+        entity_id: sensor.zeromouse_last_event_type
+    condition:
+      - condition: template
+        value_template: "{{ trigger.to_state.state not in ['unknown', 'unavailable'] }}"
+    action:
+      - variables:
+          snapshot_filename: zeromouse_{{ now().strftime('%Y%m%d_%H%M%S') }}.jpg
+      - action: image.snapshot
+        target:
+          entity_id: image.zeromouse_last_event
+        data:
+          filename: /config/www/zeromouse/{{ snapshot_filename }}
+      - delay:
+          milliseconds: 500
+      - action: notify.mobile_app_<your_phone>
+        data:
+          title: "ZeroMOUSE"
+          message: "{{ states('sensor.zeromouse_last_event_classification') | title }} event detected"
+          data:
+            image: /local/zeromouse/{{ snapshot_filename }}
+            push:
+              interruption-level: critical
+```
+
+Replace `mobile_app_<your_phone>` with your device's notify service name.
+
 ## How it works
 
 This integration communicates with the ZeroMOUSE cloud API (the same backend the official mobile app uses). It polls the device shadow state every 10 seconds and checks for new detection events every 60 seconds. No local network access to the device is required.
