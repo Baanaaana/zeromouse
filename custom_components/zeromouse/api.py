@@ -328,6 +328,105 @@ class EventClient:
         return self._auth.presign_s3_url(file_path)
 
 
+DEVICE_LIST_QUERY = """
+query ListEventByOwner($ownerID: String!, $limit: Int) {
+  listEventByOwner(ownerID: $ownerID, limit: $limit, sortDirection: DESC) {
+    items { deviceID }
+  }
+}
+"""
+
+DEVICE_DETAIL_QUERY = """
+query GetMbrPtfFlapData($deviceID: ID!) {
+  getMbrPtfFlapData(deviceID: $deviceID) {
+    deviceID
+    name
+    model
+  }
+}
+"""
+
+
+async def async_login(
+    session: aiohttp.ClientSession,
+    email: str,
+    password: str,
+) -> dict:
+    """Login with email + password via SRP. Returns auth tokens.
+
+    Returns dict with keys: IdToken, AccessToken, RefreshToken.
+    Raises ZeromouseAuthError on bad credentials.
+    Raises ZeromouseApiError on network errors.
+    """
+    from .srp import SRPAuth
+
+    try:
+        srp = SRPAuth(
+            session, email, password,
+            COGNITO_USER_POOL_ID, COGNITO_CLIENT_ID, S3_REGION,
+        )
+        return await srp.authenticate()
+    except aiohttp.ClientError as err:
+        raise ZeromouseApiError(f"Login request failed: {err}") from err
+    except Exception as err:
+        error_msg = str(err)
+        if "Incorrect username or password" in error_msg:
+            raise ZeromouseAuthError("Incorrect email or password") from err
+        if "User does not exist" in error_msg:
+            raise ZeromouseAuthError("Account not found") from err
+        raise ZeromouseApiError(f"Login failed: {err}") from err
+
+
+async def async_list_devices(
+    session: aiohttp.ClientSession,
+    access_token: str,
+    owner_id: str,
+) -> list[dict]:
+    """Discover devices owned by the user.
+
+    Returns list of {device_id, name, model} dicts.
+    """
+    try:
+        # Find device IDs from user's events
+        async with session.post(
+            GRAPHQL_URL,
+            headers={"Authorization": access_token, "Content-Type": "application/json"},
+            json={
+                "query": DEVICE_LIST_QUERY,
+                "variables": {"ownerID": owner_id, "limit": 20},
+            },
+            timeout=aiohttp.ClientTimeout(total=15),
+        ) as resp:
+            data = await resp.json(content_type=None)
+
+        items = data.get("data", {}).get("listEventByOwner", {}).get("items", [])
+        device_ids = list(dict.fromkeys(i["deviceID"] for i in items))  # unique, ordered
+
+        # Get details for each device
+        devices = []
+        for did in device_ids:
+            async with session.post(
+                GRAPHQL_URL,
+                headers={"Authorization": access_token, "Content-Type": "application/json"},
+                json={
+                    "query": DEVICE_DETAIL_QUERY,
+                    "variables": {"deviceID": did},
+                },
+                timeout=aiohttp.ClientTimeout(total=15),
+            ) as resp:
+                data = await resp.json(content_type=None)
+            detail = data.get("data", {}).get("getMbrPtfFlapData") or {}
+            devices.append({
+                "device_id": did,
+                "name": detail.get("name", did),
+                "model": detail.get("model", "ZeroMOUSE"),
+            })
+
+        return devices
+    except aiohttp.ClientError as err:
+        raise ZeromouseApiError(f"Device discovery failed: {err}") from err
+
+
 async def async_validate_credentials(
     session: aiohttp.ClientSession,
     device_id: str,

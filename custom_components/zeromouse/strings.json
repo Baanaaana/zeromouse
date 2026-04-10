@@ -2,25 +2,32 @@
   "config": {
     "step": {
       "user": {
-        "title": "Connect your ZeroMOUSE",
-        "description": "Enter your device ID and refresh token. See the documentation for how to capture the refresh token using mitmproxy.",
+        "title": "Log in to ZeroMOUSE",
+        "description": "Enter your ZeroMOUSE account credentials.",
         "data": {
-          "device_id": "Device ID",
-          "refresh_token": "Refresh Token",
-          "device_name": "Device Name"
+          "email": "Email",
+          "password": "Password"
+        }
+      },
+      "select_device": {
+        "title": "Select your ZeroMOUSE",
+        "data": {
+          "device_id": "Device"
         }
       },
       "reauth_confirm": {
         "title": "Re-authenticate ZeroMOUSE",
-        "description": "Your refresh token has expired. Please capture a new one via mitmproxy.",
+        "description": "Your session has expired. Please log in again.",
         "data": {
-          "refresh_token": "New Refresh Token"
+          "email": "Email",
+          "password": "Password"
         }
       }
     },
     "error": {
-      "invalid_auth": "Invalid refresh token. Please re-capture via mitmproxy.",
-      "cannot_connect": "Cannot connect to ZeroMOUSE cloud API.",
+      "invalid_auth": "Incorrect email or password.",
+      "cannot_connect": "Cannot connect to ZeroMOUSE cloud.",
+      "no_devices": "No ZeroMOUSE devices found for this account.",
       "unknown": "An unexpected error occurred."
     },
     "abort": {
