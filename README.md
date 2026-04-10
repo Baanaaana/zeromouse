@@ -6,6 +6,7 @@
 
 > **Disclaimer:** This is an **unofficial**, community-developed integration. It is **not** created, endorsed, or supported by ZeroMOUSE or its parent company. The ZeroMOUSE name and logo are trademarks of their respective owners and are used here solely for identification purposes. This project has no affiliation with ZeroMOUSE.
 
+
 A custom [Home Assistant](https://www.home-assistant.io/) integration for the **ZeroMOUSE** smart pet door. Monitor your cat flap status, detection events, and view captured images — all from your Home Assistant dashboard.
 
 ## Installation
