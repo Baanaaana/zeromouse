@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.2.0] - 2026-04-11
+
+### Added
+- **Dutch notification template** — `ha_notification_nl.yaml` for Dutch-speaking users
+- **Cat name variable** in notification automation — personalized messages like "Milo tried to bring in prey"
+- **Smart notification messages** — context-aware text per classification (prey, clean, out, undecidable, etc.)
+- **Critical alerts only for prey/undecidable** — other events use normal notification priority
+
+### Fixed
+- **Flap blocked sensor inverted** — `BinarySensorDeviceClass.LOCK` semantics were backwards; now correctly shows "Locked" when prey blocking is active
+- **Notification trigger** — changed from `last_event_type` to `last_event_time` for reliable firing on new events
+
 ## [1.1.0] - 2026-04-10
 
 ### Added
