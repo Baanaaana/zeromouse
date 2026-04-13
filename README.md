@@ -90,42 +90,42 @@ cards:
         disableOnInteraction: true
     cards:
       - type: picture-entity
-        entity: image.zeromouse_event_image_1
+        entity: image.zeromouse_last_event_image_1
         show_state: false
         show_name: false
         aspect_ratio: 4x3
       - type: picture-entity
-        entity: image.zeromouse_event_image_2
+        entity: image.zeromouse_last_event_image_2
         show_state: false
         show_name: false
         aspect_ratio: 4x3
       - type: picture-entity
-        entity: image.zeromouse_event_image_3
+        entity: image.zeromouse_last_event_image_3
         show_state: false
         show_name: false
         aspect_ratio: 4x3
       - type: picture-entity
-        entity: image.zeromouse_event_image_4
+        entity: image.zeromouse_last_event_image_4
         show_state: false
         show_name: false
         aspect_ratio: 4x3
       - type: picture-entity
-        entity: image.zeromouse_event_image_5
+        entity: image.zeromouse_last_event_image_5
         show_state: false
         show_name: false
         aspect_ratio: 4x3
       - type: picture-entity
-        entity: image.zeromouse_event_image_6
+        entity: image.zeromouse_last_event_image_6
         show_state: false
         show_name: false
         aspect_ratio: 4x3
       - type: picture-entity
-        entity: image.zeromouse_event_image_7
+        entity: image.zeromouse_last_event_image_7
         show_state: false
         show_name: false
         aspect_ratio: 4x3
       - type: picture-entity
-        entity: image.zeromouse_event_image_8
+        entity: image.zeromouse_last_event_image_8
         show_state: false
         show_name: false
         aspect_ratio: 4x3
